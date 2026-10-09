@@ -1,79 +1,38 @@
-/* ============================================================================
-   ЛАБОРАТОРНА РОБОТА 2. ЗОВНІШНЯ ТАБЛИЦЯ СТИЛІВ (External)
-   Магазин одягу «Полотно». Стиль веб-дизайну: МІНІМАЛІЗМ
-   (багато повітря, 2 шрифти, стримана палітра, тонкі лінії, без зайвого декору).
-
-   Файл підключається в кожній сторінці тегом:
-       <link rel="stylesheet" href="css/style.css">
-   Внутрішні (Internal) стилі кожної сторінки — у теґу <style> в її <head>.
-   Пріоритет: внутрішні стилі перекривають зовнішні, атрибут style — обидва,
-   а !important — усе (у роботі не використовуємо без потреби).
-   ========================================================================== */
-
-/* ---------------------------------------------------------------------------
-   1. УНІВЕРСАЛЬНИЙ СЕЛЕКТОР  *  — метасимвол, що заміняє будь-який елемент.
-      Скидаємо відступи браузера за замовчуванням і вмикаємо зручну
-      блокову модель: box-sizing: border-box означає, що width включає
-      padding і border (інакше блок «розпухає»).
-   --------------------------------------------------------------------------- */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* ---------------------------------------------------------------------------
-   2. СЕЛЕКТОР ЕЛЕМЕНТА  body  — базова типографіка і фон сайту.
-      ШРИФТ №1 (основний текст): Verdana — family-name,
-      Geneva — запасний family-name, sans-serif — generic-family
-      (загальна категорія, якщо жодного з перелічених шрифтів немає).
-      Колір тексту заданий у форматі HEX.
-      Фон — лінійний градієнт (linear-gradient) + запасний колір назвою.
-   --------------------------------------------------------------------------- */
 body {
     font-family: Verdana, Geneva, sans-serif;
-    font-size: 16px;          /* базовий розмір: від нього рахуються em і rem */
-    line-height: 1.6;         /* міжрядковий інтервал = 1.6 × розмір шрифту */
+    font-size: 16px;
+    line-height: 1.6;
     color: #2b2b2b;
-    background-color: whitesmoke;                               /* колір НАЗВОЮ */
+    background-color: whitesmoke;
     background-image: linear-gradient(180deg, #ffffff 0%, #f2f0ea 100%);
-    background-attachment: fixed;                 /* фон не їде при прокрутці */
+    background-attachment: fixed;
     padding: 0 24px 40px;
 }
 
-/* ---------------------------------------------------------------------------
-   3. СЕЛЕКТОР ГРУПУВАННЯ  h1, h2, h3, h4  — однакові правила для кількох
-      елементів через кому.
-      ШРИФТ №2 (заголовки): Georgia (family-name), 'Times New Roman'
-      (family-name з пробілом — у лапках), serif (generic-family).
-   --------------------------------------------------------------------------- */
 h1, h2, h3, h4 {
     font-family: Georgia, 'Times New Roman', serif;
     font-weight: 600;
-    letter-spacing: 0.02em;      /* em — відносна одиниця: 2% від розміру шрифту */
-    color: hsl(162, 33%, 22%);                                  /* колір у HSL */
+    letter-spacing: 0.02em;
+    color: hsl(162, 33%, 22%);
 }
 
-h1 { font-size: 2rem; }          /* rem — відносно шрифту кореневого елемента html */
+h1 { font-size: 2rem; }
 h2 { font-size: 1.5rem; margin-bottom: 12px; }
 h3 { font-size: 1.15rem; }
 h4 { font-size: 1rem; }
 
 p  { margin-bottom: 10px; }
 
-/* ---------------------------------------------------------------------------
-   4. ПОСИЛАННЯ ТА ЇХ ПСЕВДОКЛАСИ (стани)
-      Порядок важливий: :link → :visited → :hover → :active.
-      :link    — посилання, за яким ще не переходили
-      :visited — вже відвідане
-      :hover   — курсор наведено
-      :active  — у момент натискання
-      :focus   — елемент у фокусі (перехід клавішею Tab)
-   --------------------------------------------------------------------------- */
 a:link {
-    color: rgb(47, 93, 80);                                     /* колір у RGB */
+    color: rgb(47, 93, 80);
     text-decoration: none;
-    border-bottom: 1px solid rgba(47, 93, 80, 0.35);  /* rgba: 4-те число — прозорість */
+    border-bottom: 1px solid rgba(47, 93, 80, 0.35);
     transition: color 0.3s ease, border-color 0.3s ease;
 }
 
@@ -86,41 +45,29 @@ a:focus {
     outline-offset: 3px;
 }
 
-/* ---------------------------------------------------------------------------
-   5. СЕЛЕКТОРИ АТРИБУТІВ — вибирають елементи за наявністю або значенням
-      атрибута. Тут же використано ПСЕВДОЕЛЕМЕНТИ ::before / ::after,
-      які вставляють контент до/після вмісту елемента (властивість content).
-   --------------------------------------------------------------------------- */
-
-/* [атрибут] — усі посилання, що мають атрибут target (відкриваються в новій вкладці) */
 a[target]::after {
-    content: " \2197";           /* ↗ символ за шістнадцятковим кодом */
+    content: " \2197";
     font-size: 0.85em;
 }
 
-/* [атрибут^="значення"] — значення ПОЧИНАЄТЬСЯ з tel: (телефонні посилання) */
 a[href^="tel:"]::before {
-    content: "\260E\00A0";       /* ☎ + нерозривний пробіл */
+    content: "\260E\00A0";
 }
 
-/* [атрибут*="значення"] — значення МІСТИТЬ .html будь-де (посилання на сторінки сайту) */
 a[href*=".html"] {
     font-weight: bold;
 }
 
-/* [атрибут="значення"] — точний збіг значення */
 img[alt="Логотип магазину Полотно"] {
     transition: transform 0.4s ease;
 }
 
-/* 2D-ТРАНСФОРМАЦІЯ: rotate() повертає елемент, scale() змінює розмір */
 img[alt="Логотип магазину Полотно"]:hover {
     transform: rotate(-8deg) scale(1.12);
 }
 
-/* [атрибут~="значення"] — у списку значень (через пробіл) є окреме слово btn */
 [class~="btn"] {
-    display: inline-block;       /* рядково-блоковий: у рядку, але з розмірами */
+    display: inline-block;
     font-family: Verdana, Geneva, sans-serif;
     font-size: 0.95rem;
     padding: 10px 18px;
@@ -129,7 +76,6 @@ img[alt="Логотип магазину Полотно"]:hover {
     background-color: #ffffff;
     color: hsl(162, 33%, 22%);
     cursor: pointer;
-    /* ПЕРЕХІД між двома стилями: 4 властивості одночасно */
     transition: background-color 0.35s ease,
                 color 0.35s ease,
                 box-shadow 0.35s ease,
@@ -140,12 +86,9 @@ img[alt="Логотип магазину Полотно"]:hover {
     background-color: hsl(162, 33%, 27%);
     color: whitesmoke;
     box-shadow: 0 6px 14px rgba(47, 93, 80, 0.35);
-    transform: translateY(-3px);          /* 2D-зсув угору на 3 пікселі */
+    transform: translateY(-3px);
 }
 
-/* ---------------------------------------------------------------------------
-   6. КНОПКИ ФОРМ (селектор елемента + селектор атрибута)
-   --------------------------------------------------------------------------- */
 button {
     font-family: Verdana, Geneva, sans-serif;
     font-size: 0.9rem;
@@ -166,37 +109,34 @@ button:hover {
 
 button[type="reset"]:hover { background-color: #c0392b; border-color: #c0392b; }
 
-/* ---------------------------------------------------------------------------
-   7. СПІЛЬНІ БЛОКИ: ШАПКА, МЕНЮ, ПІДВАЛ
-   --------------------------------------------------------------------------- */
 .site-header {
     background-color: #ffffff;
     border-bottom: 1px solid #ddd8cc;
     padding: 18px 20px;
 }
 
-/* КОМБІНАТОР «ПРОБІЛ» (нащадок): будь-який .brand усередині .site-header,
-   на будь-якому рівні вкладеності */
-.site-header .brand {
-    display: flex;               /* flex-контейнер: логотип і назва в один рядок */
-    align-items: center;         /* вирівнювання по поперечній осі (вертикаль) */
-    gap: 14px;                   /* проміжок між flex-елементами */
+#top {
+    border-bottom-color: #d4cdbd;
 }
 
-/* КОМБІНАТОР «>» (дочірній): h1 лише першого рівня вкладеності всередині .brand */
+.site-header .brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
 .brand > h1 {
     font-size: 1.6rem;
     margin: 0;
 }
 
-/* КОМБІНАТОР «+» (сусідній): меню, що стоїть ОДРАЗУ після блоку .brand */
 .brand + .main-nav {
     margin-top: 14px;
 }
 
 .main-nav form {
     display: flex;
-    flex-wrap: wrap;             /* кнопки переносяться на новий рядок */
+    flex-wrap: wrap;
     gap: 10px;
 }
 
@@ -208,17 +148,13 @@ button[type="reset"]:hover { background-color: #c0392b; border-color: #c0392b; }
     font-size: 0.9rem;
 }
 
-/* ПСЕВДОКЛАС :last-child — останній елемент серед сусідніх (тут: рядок з ©) */
 .site-footer p:last-child {
     color: #6f6f6f;
     font-size: 0.85rem;
 }
 
-/* ---------------------------------------------------------------------------
-   8. ТАБЛИЦЯ
-   --------------------------------------------------------------------------- */
 table {
-    border-collapse: collapse;   /* межі сусідніх комірок зливаються в одну лінію */
+    border-collapse: collapse;
     width: 100%;
     background-color: #ffffff;
 }
@@ -239,12 +175,8 @@ th, td {
 thead th { background-color: hsl(162, 25%, 92%); }
 tfoot    { background-color: #f6f4ee; font-weight: bold; }
 
-/* ПСЕВДОКЛАС :nth-child(even) — кожен парний рядок (смугаста таблиця) */
 tbody tr:nth-child(even) { background-color: #fbfaf7; }
 
-/* ---------------------------------------------------------------------------
-   9. СПИСКИ ТА ПСЕВДОЕЛЕМЕНТ ::marker (стилізує маркер/номер пункту)
-   --------------------------------------------------------------------------- */
 ul, ol { padding-left: 22px; }
 li     { margin-bottom: 4px; }
 
@@ -253,64 +185,46 @@ li::marker {
     font-weight: bold;
 }
 
-/* ПСЕВДОЕЛЕМЕНТ ::selection — вигляд тексту, виділеного користувачем */
 ::selection {
     background-color: hsl(162, 33%, 85%);
     color: #1d3a32;
 }
 
-/* ПСЕВДОЕЛЕМЕНТ ::placeholder — сірий текст-підказка в полях форми */
 ::placeholder {
     color: #a8a49a;
     font-style: italic;
 }
 
-/* ---------------------------------------------------------------------------
-   10. АНІМАЦІЇ (@keyframes) — описують проміжні кроки,
-       далі їх «вмикають» властивістю animation у конкретних елементів.
-   --------------------------------------------------------------------------- */
-
-/* Поява: прозорість 0 → 1 з невеликим зсувом угору */
 @keyframes fade-in {
     from { opacity: 0; transform: translateY(-14px); }
     to   { opacity: 1; transform: translateY(0); }
 }
 
-/* «Старовинне фото»: кольорове → сепія з більшим контрастом */
 @keyframes old-photo {
     0%   { filter: sepia(0) contrast(1) brightness(1); transform: scale(1); }
     60%  { filter: sepia(0.7) contrast(1.1) brightness(0.98); }
     100% { filter: sepia(1) contrast(1.25) brightness(0.92); transform: scale(1.03); }
 }
 
-/* Легке погойдування для емодзі-привітання */
 @keyframes wave {
     0%, 100% { transform: rotate(0deg); }
     30%      { transform: rotate(16deg); }
     60%      { transform: rotate(-12deg); }
 }
 
-/* Шапка кожної сторінки з'являється анімацією */
 .site-header {
     animation-name: fade-in;
     animation-duration: 0.7s;
     animation-timing-function: ease-out;
 }
 
-/* ---------------------------------------------------------------------------
-   11. ДОПОМІЖНЕ
-   --------------------------------------------------------------------------- */
-
-/* Селектор атрибута [hidden] + display: none — елемент зникає зі сторінки */
 [hidden] { display: none; }
 
-/* ПСЕВДОКЛАС :not() — усі зображення, КРІМ логотипа, мають тонку рамку */
 img:not(.brand-logo) {
     border: 1px solid #e3ded2;
     background-color: #ffffff;
 }
 
-/* Поля форм */
 input, select, textarea {
     font-family: Verdana, Geneva, sans-serif;
     font-size: 0.95rem;

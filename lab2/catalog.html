@@ -6,13 +6,7 @@
     <link rel="stylesheet" href="css/style.css">
     <title>Каталог — Полотно</title>
 
-    <!-- ВНУТРІШНЯ таблиця стилів: правила лише для сторінки «Каталог» -->
     <style>
-        /* === ШАПКА ФІКСОВАНА ЗВЕРХУ (вимога варіанту) ===
-           position: fixed прив'язує блок до вікна браузера: при прокрутці
-           назва магазину та логотип лишаються на місці.
-           Фіксований елемент випадає з потоку, тому вміст сторінки
-           «підпирається» відступом padding-top у body. */
         .site-header {
             position: fixed;
             top: 0;
@@ -24,25 +18,17 @@
 
         body { padding-top: 152px; }
 
-        /* === СПИСОК ТОВАРІВ: МОДУЛЬ GRID (вимога п. 6) ===
-           repeat(auto-fit, minmax(300px, 1fr)) — браузер сам вирішує,
-           скільки колонок помістити: кожна не вужча за 300px.
-           Це і є адаптивність без жодного медіа-запиту. */
         .product-list {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 26px;
-            align-items: start;         /* картки не розтягуються до однієї висоти */
+            align-items: start;
             padding-left: 0;
             list-style-position: inside;
         }
 
-        /* === РАМКА КАРТКИ ТОВАРУ (вимога варіанту) ===
-           темно-зелена рамка: верхня межа крапкова (dotted), решта —
-           суцільні (solid) і тонкі (1px); box-shadow з ключовим словом inset
-           дає тінь УСЕРЕДИНУ рамки. */
         .product {
-            border: 1px solid darkgreen;              /* колір НАЗВОЮ */
+            border: 1px solid darkgreen;
             border-top: 3px dotted darkgreen;
             box-shadow: inset 0 0 16px rgba(0, 100, 0, 0.25);
             border-radius: 2px;
@@ -53,9 +39,6 @@
 
         .product:hover { box-shadow: inset 0 0 22px rgba(0, 100, 0, 0.35); }
 
-        /* === ТИПОГРАФІКА КАРТКИ (вимога варіанту) ===
-           Назва товару має БІЛЬШУ вагу (700 проти 400) і більшу висоту
-           гліфів (1.25rem проти 0.95rem), ніж опис, та є ПОХИЛОЮ. */
         .product-name {
             font-weight: 700;
             font-size: 1.25rem;
@@ -70,10 +53,6 @@
             color: #4a4a4a;
         }
 
-        /* === ФОТО: АНІМАЦІЯ «СТАРОВИННЕ ЗОБРАЖЕННЯ» (вимога варіанту) ===
-           При наведенні вмикається @keyframes old-photo зі style.css:
-           кольорове фото плавно перетворюється на сепію.
-           forwards — після завершення анімація лишає кінцевий стан. */
         .product-photo {
             width: 100%;
             height: auto;
@@ -88,14 +67,10 @@
             animation-fill-mode: forwards;
         }
 
-        /* === ВІДВІДАНІ ПОСИЛАННЯ (вимога варіанту) ===
-           :visited — посилання, за яким користувач уже переходив. */
         .product-link:visited { color: darkgreen; }
 
-        /* КОМБІНАТОР «+» (сусідній): характеристики одразу після заголовка */
         .specs-title + .product-specs { margin-top: 4px; }
 
-        /* ПСЕВДОКЛАС :first-child — перша характеристика в списку */
         .product-specs li:first-child { color: hsl(162, 33%, 25%); }
 
         @media (max-width: 760px) {

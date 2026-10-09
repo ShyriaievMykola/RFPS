@@ -6,9 +6,7 @@
     <link rel="stylesheet" href="css/style.css">
     <title>Відгуки про товар — Полотно</title>
 
-    <!-- ВНУТРІШНЯ таблиця стилів: сторінка «Відгуки» на МОДУЛІ GRID (вимога п. 6) -->
     <style>
-        /* Сітка карток відгуків: колонки підлаштовуються під ширину екрана */
         .content {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
@@ -16,8 +14,6 @@
             align-items: start;
         }
 
-        /* grid-column: 1 / -1 — елемент розтягується від першої до останньої
-           лінії сітки, тобто на всю ширину (заголовок над усіма картками) */
         .content > h2 {
             grid-column: 1 / -1;
             margin-bottom: 0;
@@ -33,28 +29,24 @@
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        /* 2D-трансформація: легкий нахил і підняття картки при наведенні */
         .review:hover {
             transform: translateY(-4px) skewX(-1deg);
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
         }
 
-        /* ПСЕВДОЕЛЕМЕНТ ::before — лапки перед текстом відгуку */
         .review p::before {
-            content: "\201C";          /* “ */
+            content: "\201C";
             font-family: Georgia, 'Times New Roman', serif;
             font-size: 1.6em;
             color: hsl(162, 33%, 55%);
             line-height: 0;
         }
 
-        /* ПСЕВДОЕЛЕМЕНТ ::first-letter — збільшена перша літера імені */
         .review h3::first-letter {
             font-size: 1.5em;
             color: hsl(162, 33%, 30%);
         }
 
-        /* ПСЕВДОКЛАС :nth-child(odd) — непарні картки мають інший фон */
         .review:nth-child(odd) { background-color: #fbfaf7; }
     </style>
 </head>

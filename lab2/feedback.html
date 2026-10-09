@@ -6,35 +6,25 @@
     <link rel="stylesheet" href="css/style.css">
     <title>Зворотний зв'язок — Полотно</title>
 
-    <!-- ВНУТРІШНЯ таблиця стилів: сторінка «Зворотний зв'язок» на МОДУЛІ FLEX -->
     <style>
-        /* ============ ВЛАСТИВОСТІ FLEX-КОНТЕЙНЕРА (вимога п. 5) ============ */
         .feedback-form {
-            display: flex;                    /* елемент стає flex-контейнером */
-            flex-flow: row wrap;              /* скорочення: flex-direction + flex-wrap */
-            justify-content: space-between;   /* розподіл по ГОЛОВНІЙ осі (горизонталь) */
-            align-items: flex-start;          /* вирівнювання по ПОПЕРЕЧНІЙ осі */
-            align-content: flex-start;        /* вирівнювання РЯДКІВ, коли є перенос */
-            gap: 18px;                        /* проміжки між елементами */
+            display: flex;
+            flex-flow: row wrap;
+            justify-content: space-between;
+            align-items: flex-start;
+            align-content: flex-start;
+            gap: 18px;
             max-width: 900px;
             padding: 20px;
             background-color: #ffffff;
             border: 1px solid #ddd8cc;
         }
 
-        /* ============ ВЛАСТИВОСТІ FLEX-ЕЛЕМЕНТІВ (вимога п. 5) ============
-           flex-grow   — наскільки елемент РОЗТЯГУЄТЬСЯ, коли є вільне місце
-           flex-shrink — наскільки СТИСКАЄТЬСЯ, коли місця бракує
-           flex-basis  — початкова ширина до розтягування
-           order       — порядок показу (менше число — раніше)
-           align-self  — власне вирівнювання, що перекриває align-items */
-
         .personal-info {
             order: 1;
             flex-grow: 1;
             flex-shrink: 1;
             flex-basis: 340px;
-            /* Вкладений flex: поля всередині рамки стоять колонкою */
             display: flex;
             flex-flow: column nowrap;
             gap: 6px;
@@ -44,18 +34,18 @@
 
         .field-purpose {
             order: 2;
-            flex: 1 1 320px;         /* скорочення: grow shrink basis */
+            flex: 1 1 320px;
         }
 
         .field-details {
             order: 3;
-            flex: 2 1 100%;          /* найширше поле: росте вдвічі швидше */
+            flex: 2 1 100%;
         }
 
         .field-consent {
             order: 4;
             flex: 1 1 60%;
-            align-self: center;      /* по центру поперечної осі */
+            align-self: center;
             display: flex;
             align-items: center;
             gap: 8px;
@@ -63,13 +53,12 @@
 
         .field-buttons {
             order: 5;
-            flex: 0 1 auto;          /* не розтягується */
-            align-self: flex-end;    /* притиснуто до правого краю рядка */
+            flex: 0 1 auto;
+            align-self: flex-end;
             display: flex;
             gap: 10px;
         }
 
-        /* Поля всередині рамки «Персональна інформація» */
         .personal-info .field { margin: 0; }
 
         legend {
@@ -86,13 +75,11 @@
         input[type="number"] { width: 120px; }
         textarea { resize: vertical; min-height: 120px; }
 
-        /* КОМБІНАТОР «пробіл» + псевдоклас :required — підсвічуємо обов'язкові поля */
         .feedback-form input:required,
         .feedback-form select:required {
             border-left: 3px solid hsl(162, 33%, 45%);
         }
 
-        /* Сторінка в цілому теж вирівняна через flex */
         .content {
             display: flex;
             flex-flow: column nowrap;
