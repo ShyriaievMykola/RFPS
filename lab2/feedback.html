@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Зворотний зв'язок — Полотно</title>
+
+    <!-- ВНУТРІШНЯ таблиця стилів: сторінка «Зворотний зв'язок» на МОДУЛІ FLEX -->
+    <style>
+        /* ============ ВЛАСТИВОСТІ FLEX-КОНТЕЙНЕРА (вимога п. 5) ============ */
+        .feedback-form {
+            display: flex;                    /* елемент стає flex-контейнером */
+            flex-flow: row wrap;              /* скорочення: flex-direction + flex-wrap */
+            justify-content: space-between;   /* розподіл по ГОЛОВНІЙ осі (горизонталь) */
+            align-items: flex-start;          /* вирівнювання по ПОПЕРЕЧНІЙ осі */
+            align-content: flex-start;        /* вирівнювання РЯДКІВ, коли є перенос */
+            gap: 18px;                        /* проміжки між елементами */
+            max-width: 900px;
+            padding: 20px;
+            background-color: #ffffff;
+            border: 1px solid #ddd8cc;
+        }
+
+        /* ============ ВЛАСТИВОСТІ FLEX-ЕЛЕМЕНТІВ (вимога п. 5) ============
+           flex-grow   — наскільки елемент РОЗТЯГУЄТЬСЯ, коли є вільне місце
+           flex-shrink — наскільки СТИСКАЄТЬСЯ, коли місця бракує
+           flex-basis  — початкова ширина до розтягування
+           order       — порядок показу (менше число — раніше)
+           align-self  — власне вирівнювання, що перекриває align-items */
+
+        .personal-info {
+            order: 1;
+            flex-grow: 1;
+            flex-shrink: 1;
+            flex-basis: 340px;
+            /* Вкладений flex: поля всередині рамки стоять колонкою */
+            display: flex;
+            flex-flow: column nowrap;
+            gap: 6px;
+            padding: 14px 16px;
+            border: 1px solid hsl(162, 20%, 70%);
+        }
+
+        .field-purpose {
+            order: 2;
+            flex: 1 1 320px;         /* скорочення: grow shrink basis */
+        }
+
+        .field-details {
+            order: 3;
+            flex: 2 1 100%;          /* найширше поле: росте вдвічі швидше */
+        }
+
+        .field-consent {
+            order: 4;
+            flex: 1 1 60%;
+            align-self: center;      /* по центру поперечної осі */
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .field-buttons {
+            order: 5;
+            flex: 0 1 auto;          /* не розтягується */
+            align-self: flex-end;    /* притиснуто до правого краю рядка */
+            display: flex;
+            gap: 10px;
+        }
+
+        /* Поля всередині рамки «Персональна інформація» */
+        .personal-info .field { margin: 0; }
+
+        legend {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-weight: bold;
+            padding: 0 6px;
+            color: hsl(162, 33%, 22%);
+        }
+
+        label { display: block; margin-bottom: 2px; font-size: 0.9rem; }
+        .field-consent label { margin: 0; }
+
+        input[type="text"], input[type="email"], select, textarea { width: 100%; }
+        input[type="number"] { width: 120px; }
+        textarea { resize: vertical; min-height: 120px; }
+
+        /* КОМБІНАТОР «пробіл» + псевдоклас :required — підсвічуємо обов'язкові поля */
+        .feedback-form input:required,
+        .feedback-form select:required {
+            border-left: 3px solid hsl(162, 33%, 45%);
+        }
+
+        /* Сторінка в цілому теж вирівняна через flex */
+        .content {
+            display: flex;
+            flex-flow: column nowrap;
+            gap: 14px;
+        }
+
+        @media (max-width: 760px) {
+            .field-buttons { align-self: stretch; }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header" id="top">
+        <div class="brand">
+            <img class="brand-logo" src="images/logo.svg" alt="Логотип магазину Полотно" width="60" height="60">
+            <h1>Зворотний зв'язок</h1>
+        </div>
+        <form class="home-form" action="index.html" method="get">
+            <button type="submit">&larr; На головну сторінку</button>
+        </form>
+    </header>
+    <main class="content">
+        <h2>Залиште ваше повідомлення</h2>
+        <form class="feedback-form" action="#" method="post">
+            <fieldset class="personal-info">
+                <legend>Персональна інформація</legend>
+                <p class="field field-fullname">
+                    <label for="fullname">Прізвище та ім'я:*</label><br>
+                    <input type="text" id="fullname" name="fullname" placeholder="Шевченко Тарас" required>
+                </p>
+                <p class="field field-email">
+                    <label for="email">E-mail:*</label><br>
+                    <input type="email" id="email" name="email" placeholder="example@mail.com" required>
+                </p>
+                <p class="field field-age">
+                    <label for="age">Вік:</label><br>
+                    <input type="number" id="age" name="age" min="14" max="100" placeholder="20">
+                </p>
+                <p class="field field-education">
+                    <label for="education">Освіта:</label><br>
+                    <select id="education" name="education">
+                        <option value="full">Повна</option>
+                        <option value="incomplete">Неповна</option>
+                        <option value="higher">Вища</option>
+                        <option value="professional">Професійна</option>
+                    </select>
+                </p>
+            </fieldset>
+            <p class="field field-purpose">
+                <label for="purpose">Мета зворотного зв'язку:*</label><br>
+                <select id="purpose" name="purpose" required>
+                    <option value="" disabled selected>-- Оберіть мету --</option>
+                    <option value="cooperation">Співпраця</option>
+                    <option value="complaint">Скарга на порушення права власності</option>
+                    <option value="proposal">Пропозиція</option>
+                    <option value="bug">Наявність помилки</option>
+                </select>
+            </p>
+            <p class="field field-details">
+                <label for="details">Детально (макс. 300 символів):</label><br>
+                <textarea id="details" name="details" rows="6" cols="50" maxlength="300" placeholder="Опишіть ваше питання..."></textarea>
+            </p>
+            <p class="field field-consent">
+                <input type="checkbox" id="consent" name="consent" required>
+                <label for="consent">Я даю згоду на обробку моїх персональних даних</label>
+            </p>
+            <p class="field field-buttons">
+                <button type="submit">Надіслати</button>
+                <button type="reset">Очистити форму</button>
+            </p>
+        </form>
+    </main>
+    <footer class="site-footer">
+        <p>Email: info@polotno.example</p>
+        <p>&copy; 2026 Полотно. Усі права захищено.</p>
+    </footer>
+</body>
+</html>

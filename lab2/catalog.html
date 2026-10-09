@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Каталог — Полотно</title>
+
+    <!-- ВНУТРІШНЯ таблиця стилів: правила лише для сторінки «Каталог» -->
+    <style>
+        /* === ШАПКА ФІКСОВАНА ЗВЕРХУ (вимога варіанту) ===
+           position: fixed прив'язує блок до вікна браузера: при прокрутці
+           назва магазину та логотип лишаються на місці.
+           Фіксований елемент випадає з потоку, тому вміст сторінки
+           «підпирається» відступом padding-top у body. */
+        .site-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 10;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        body { padding-top: 152px; }
+
+        /* === СПИСОК ТОВАРІВ: МОДУЛЬ GRID (вимога п. 6) ===
+           repeat(auto-fit, minmax(300px, 1fr)) — браузер сам вирішує,
+           скільки колонок помістити: кожна не вужча за 300px.
+           Це і є адаптивність без жодного медіа-запиту. */
+        .product-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 26px;
+            align-items: start;         /* картки не розтягуються до однієї висоти */
+            padding-left: 0;
+            list-style-position: inside;
+        }
+
+        /* === РАМКА КАРТКИ ТОВАРУ (вимога варіанту) ===
+           темно-зелена рамка: верхня межа крапкова (dotted), решта —
+           суцільні (solid) і тонкі (1px); box-shadow з ключовим словом inset
+           дає тінь УСЕРЕДИНУ рамки. */
+        .product {
+            border: 1px solid darkgreen;              /* колір НАЗВОЮ */
+            border-top: 3px dotted darkgreen;
+            box-shadow: inset 0 0 16px rgba(0, 100, 0, 0.25);
+            border-radius: 2px;
+            padding: 16px 18px;
+            background-color: #ffffff;
+            transition: box-shadow 0.4s ease;
+        }
+
+        .product:hover { box-shadow: inset 0 0 22px rgba(0, 100, 0, 0.35); }
+
+        /* === ТИПОГРАФІКА КАРТКИ (вимога варіанту) ===
+           Назва товару має БІЛЬШУ вагу (700 проти 400) і більшу висоту
+           гліфів (1.25rem проти 0.95rem), ніж опис, та є ПОХИЛОЮ. */
+        .product-name {
+            font-weight: 700;
+            font-size: 1.25rem;
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+
+        .product-desc {
+            font-weight: 400;
+            font-size: 0.95rem;
+            font-style: normal;
+            color: #4a4a4a;
+        }
+
+        /* === ФОТО: АНІМАЦІЯ «СТАРОВИННЕ ЗОБРАЖЕННЯ» (вимога варіанту) ===
+           При наведенні вмикається @keyframes old-photo зі style.css:
+           кольорове фото плавно перетворюється на сепію.
+           forwards — після завершення анімація лишає кінцевий стан. */
+        .product-photo {
+            width: 100%;
+            height: auto;
+            display: block;
+            margin-bottom: 12px;
+        }
+
+        .product-photo:hover {
+            animation-name: old-photo;
+            animation-duration: 1.2s;
+            animation-timing-function: ease-in-out;
+            animation-fill-mode: forwards;
+        }
+
+        /* === ВІДВІДАНІ ПОСИЛАННЯ (вимога варіанту) ===
+           :visited — посилання, за яким користувач уже переходив. */
+        .product-link:visited { color: darkgreen; }
+
+        /* КОМБІНАТОР «+» (сусідній): характеристики одразу після заголовка */
+        .specs-title + .product-specs { margin-top: 4px; }
+
+        /* ПСЕВДОКЛАС :first-child — перша характеристика в списку */
+        .product-specs li:first-child { color: hsl(162, 33%, 25%); }
+
+        @media (max-width: 760px) {
+            body { padding-top: 230px; }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header" id="top">
+        <div class="brand">
+            <img class="brand-logo" src="images/logo.svg" alt="Логотип магазину Полотно" width="60" height="60">
+            <h1>Каталог інтернет-магазину "Полотно"</h1>
+        </div>
+        <form class="home-form" action="index.html" method="get">
+            <button type="submit">&larr; На головну сторінку</button>
+        </form>
+    </header>
+    <main class="content">
+        <h2>Список товарів</h2>
+        <ol class="product-list">
+            <li>
+                <article class="product">
+                    <h3 class="product-name">Сукня лляна "Весна"</h3>
+                    <img class="product-photo" src="images/dress-vesna.jpg" alt="Біла лляна сукня з поясом" width="300">
+                    <p class="product-desc">Легка сукня з поясом-мотузкою для теплих днів і прогулянок містом.</p>
+                    <p class="product-country"><b>Країна походження:</b> Україна</p>
+                    <h4 class="specs-title">Основні характеристики:</h4>
+                    <ul class="product-specs">
+                        <li><b>Матеріал:</b> 100% льон</li>
+                        <li><b>Розміри:</b> XS-XL</li>
+                        <li><b>Колір:</b> молочний</li>
+                        <li><b>Сезон:</b> весна-літо</li>
+                        <li><b>Догляд:</b> делікатне прання при 30 °C</li>
+                    </ul>
+                    <p><a class="product-link" href="reviews.html">Відгуки про товар</a></p>
+                </article>
+            </li>
+            <li>
+                <article class="product">
+                    <h3 class="product-name">Спідниця міді "Грація"</h3>
+                    <img class="product-photo" src="images/skirt-gratsiia.jpg" alt="Біла спідниця міді з синім квітковим принтом" width="300">
+                    <p class="product-desc">Спідниця-трапеція довжини міді з квітковим принтом.</p>
+                    <p class="product-country"><b>Країна походження:</b> Франція</p>
+                    <h4 class="specs-title">Основні характеристики:</h4>
+                    <ul class="product-specs">
+                        <li><b>Матеріал:</b> віскоза 65%, поліестер 35%</li>
+                        <li><b>Розміри:</b> XS-XL</li>
+                        <li><b>Колір:</b> білий з синім квітковим принтом</li>
+                        <li><b>Сезон:</b> всесезонна</li>
+                        <li><b>Догляд:</b> делікатне прання при 30 °C</li>
+                    </ul>
+                    <p><a class="product-link" href="reviews.html">Відгуки про товар</a></p>
+                </article>
+            </li>
+            <li>
+                <article class="product">
+                    <h3 class="product-name">Вишиванка жіноча "Карпати"</h3>
+                    <img class="product-photo" src="images/vyshyvanka-karpaty.jpg" alt="Жіноча вишиванка з кольоровою вишивкою" width="300">
+                    <p class="product-desc">Класична сорочка з ручною вишивкою рослинним орнаментом.</p>
+                    <p class="product-country"><b>Країна походження:</b> Україна</p>
+                    <h4 class="specs-title">Основні характеристики:</h4>
+                    <ul class="product-specs">
+                        <li><b>Матеріал:</b> льон 70%, бавовна 30%</li>
+                        <li><b>Розміри:</b> XS-XL</li>
+                        <li><b>Колір:</b> білий з кольоровою вишивкою</li>
+                        <li><b>Сезон:</b> всесезонна</li>
+                        <li><b>Догляд:</b> ручне прання</li>
+                    </ul>
+                    <p><a class="product-link" href="reviews.html">Відгуки про товар</a></p>
+                </article>
+            </li>
+            <li>
+                <article class="product">
+                    <h3 class="product-name">Джинси прямі "Denim Classic"</h3>
+                    <img class="product-photo" src="images/jeans-classic.jpg" alt="Сині прямі джинси" width="300">
+                    <p class="product-desc">Універсальні джинси прямого крою, що не втрачають форми.</p>
+                    <p class="product-country"><b>Країна походження:</b> Туреччина</p>
+                    <h4 class="specs-title">Основні характеристики:</h4>
+                    <ul class="product-specs">
+                        <li><b>Матеріал:</b> бавовна 98%, еластан 2%</li>
+                        <li><b>Розміри:</b> S-3XL</li>
+                        <li><b>Колір:</b> синій</li>
+                        <li><b>Сезон:</b> всесезонні</li>
+                        <li><b>Догляд:</b> прання при 40 °C навиворіт</li>
+                    </ul>
+                    <p><a class="product-link" href="reviews.html">Відгуки про товар</a></p>
+                </article>
+            </li>
+            <li>
+                <article class="product">
+                    <h3 class="product-name">Футболка дитяча "Сонечко"</h3>
+                    <img class="product-photo" src="images/kids-tee-sonechko.jpg" alt="Біла дитяча футболка" width="300">
+                    <p class="product-desc">М'яка базова футболка для щоденного носіння.</p>
+                    <p class="product-country"><b>Країна походження:</b> Україна</p>
+                    <h4 class="specs-title">Основні характеристики:</h4>
+                    <ul class="product-specs">
+                        <li><b>Матеріал:</b> органічна бавовна 100%</li>
+                        <li><b>Розміри:</b> 92-164 см</li>
+                        <li><b>Колір:</b> білий</li>
+                        <li><b>Сезон:</b> весна-літо</li>
+                        <li><b>Догляд:</b> прання при 40 °C</li>
+                    </ul>
+                    <p><a class="product-link" href="reviews.html">Відгуки про товар</a></p>
+                </article>
+            </li>
+            <li>
+                <article class="product">
+                    <h3 class="product-name">Пальто вовняне "Київ"</h3>
+                    <img class="product-photo" src="images/coat-kyiv.jpg" alt="Пальто кольору кемел з поясом" width="300">
+                    <p class="product-desc">Пальто-халат подовженого крою з поясом.</p>
+                    <p class="product-country"><b>Країна походження:</b> Італія</p>
+                    <h4 class="specs-title">Основні характеристики:</h4>
+                    <ul class="product-specs">
+                        <li><b>Матеріал:</b> вовна 80%, кашемір 20%</li>
+                        <li><b>Розміри:</b> S-XL</li>
+                        <li><b>Колір:</b> карамельний</li>
+                        <li><b>Сезон:</b> осінь-зима</li>
+                        <li><b>Догляд:</b> тільки хімчистка</li>
+                    </ul>
+                    <p><a class="product-link" href="reviews.html">Відгуки про товар</a></p>
+                </article>
+            </li>
+        </ol>
+    </main>
+    <footer class="site-footer">
+        <p>Телефон: <a href="tel:+380441234567">+38 (044) 123-45-67</a></p>
+        <p>&copy; 2026 Полотно. Усі права захищено.</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Полотно — інтернет-магазин одягу</title>
+
+    <!-- ВНУТРІШНЯ (Internal) таблиця стилів: правила лише для головної сторінки -->
+    <style>
+        /* === РОЗКЛАДКА СТОРІНКИ: МОДУЛЬ GRID ===
+           display: grid перетворює body на сітку.
+           grid-template-columns — ширини стовпців (280px і «решта місця»),
+           grid-template-areas — малюнок сітки іменами областей. */
+        body {
+            display: grid;
+            grid-template-columns: 280px minmax(0, 1fr);
+            grid-template-areas:
+                "header  header"
+                "sidebar main"
+                "footer  footer";
+            gap: 22px;
+            align-content: start;
+        }
+
+        .site-header { grid-area: header; }
+        .sidebar     { grid-area: sidebar; }
+        .content     { grid-area: main; }
+        .site-footer { grid-area: footer; }
+
+        /* === POSITION №1: relative ===
+           Сам заголовок залишається в потоці, але стає «точкою відліку»
+           для дочірнього елемента з position: absolute.
+           padding-top звільняє місце під абсолютно позиціонований блок. */
+        .site-header {
+            position: relative;
+            padding-top: 104px;
+        }
+
+        /* === POSITION №2: absolute (вимога варіанту) ===
+           Блок «Назва магазину + логотип» абсолютно позиціонований
+           з нульовим відступом зверху: top: 0.
+           z-index задає порядок накладання: що більше, то вище. */
+        .brand {
+            position: absolute;
+            top: 0;
+            left: 20px;
+            right: 20px;
+            z-index: 5;
+            padding: 16px 0;
+        }
+
+        /* === POSITION №3: sticky ===
+           Меню прокручується разом зі сторінкою, але «прилипає» до верху
+           шапки, доки вона видима. */
+        .main-nav {
+            position: sticky;
+            top: 0;
+            z-index: 4;
+            background-color: #ffffff;
+            padding: 6px 0;
+        }
+
+        /* === POSITION №4: fixed ===
+           Кнопка «Нагору» прив'язана до вікна браузера, а не до сторінки,
+           тому завжди лишається у правому нижньому куті. */
+        .to-top {
+            position: fixed;
+            right: 26px;
+            bottom: 26px;
+            z-index: 50;
+            display: inline-block;          /* display: inline-block */
+            width: 46px;
+            height: 46px;
+            line-height: 44px;
+            text-align: center;
+            font-size: 1.3rem;
+            border: 1px solid hsl(162, 33%, 27%);
+            border-radius: 50%;
+            background-color: #ffffff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+        }
+
+        /* === БІЧНА ПАНЕЛЬ === */
+        .sidebar {
+            padding: 16px 18px;
+            background-color: #ffffff;
+            border-left: 3px solid hsl(162, 33%, 27%);
+            font-size: 0.92rem;
+        }
+
+        /* === БЛОК «МЕТА» (вимога варіанту) ===
+           Зовнішні відступи (margin: 36px) БІЛЬШІ за внутрішні (padding: 14px)
+           — відстань до сусідніх блоків більша, ніж від умовної рамки до тексту.
+           overflow-y: auto — смуга прокручування з'являється АВТОМАТИЧНО
+           і лише тоді, коли текст не вміщається у 260px (вимога п. 4). */
+        .goal {
+            margin: 36px 0;
+            padding: 14px 16px;
+            max-height: 210px;
+            overflow-y: auto;
+            border: 1px solid #ddd8cc;
+            background-color: #ffffff;
+        }
+
+        /* ПСЕВДОЕЛЕМЕНТ ::before + content + АНІМАЦІЯ (вимога варіанту):
+           перед описом мети виводимо привітальний емодзі 👋 */
+        .goal-description::before {
+            content: "\1F44B\00A0";       /* 👋 + нерозривний пробіл */
+            display: inline-block;
+            font-size: 1.3em;
+            animation: wave 1.6s ease-in-out infinite;
+        }
+
+        /* Речення, стилізоване тегами span/i/b/em/u (з ЛР1) */
+        .styled-sentence span { color: rgb(192, 57, 43); font-weight: bold; }
+
+        /* КОМБІНАТОР «~» (загальний сестринський):
+           усі абзаци, що йдуть ПІСЛЯ списку завдань у межах одного батька */
+        .goal-tasks ~ p { font-style: italic; }
+
+        /* === БЛОК ТАБЛИЦІ (вимога варіанту) ===
+           При наведенні курсору блок зміщується ВГОРУ на 2% від власної висоти:
+           у translateY() відсотки рахуються від розміру самого елемента. */
+        .assortment {
+            padding: 10px;
+            background-color: #ffffff;
+            border: 1px solid #ddd8cc;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .assortment:hover {
+            transform: translateY(-2%);
+            box-shadow: 0 10px 18px rgba(0, 0, 0, 0.08);
+        }
+
+        /* === СТАТТЯ «НОВА КОЛЕКЦІЯ»: FLOAT ===
+           float: left виймає картинку з потоку і притискає ліворуч,
+           а текст обтікає її справа. overflow: auto у батька потрібен,
+           щоб блок «обхопив» плаваючий елемент і не схлопнувся. */
+        .collection {
+            overflow: auto;
+            padding: 12px;
+            background-color: #ffffff;
+            border: 1px solid #ddd8cc;
+        }
+
+        .collection img {
+            float: left;
+            width: 320px;
+            margin: 0 18px 10px 0;
+        }
+
+        /* === КНОПКИ ОСОБИСТОГО КАБІНЕТУ ===
+           ПЕРЕХІД між двома стилями (вимога п. 4): при наведенні змінюються
+           фон, колір шрифту, тінь і положення — 4 властивості (див. style.css).
+           Тут лише додаємо другий шрифт у напису. */
+        .account { margin-top: 26px; }
+        .btn-register { font-family: Georgia, 'Times New Roman', serif; }
+
+        /* === АДРЕСА І ТЕЛЕФОНИ (вимога варіанту) ===
+           1) ::selection — колір шрифту і фон виділеного користувачем тексту
+              посилені на 10% (темніший фон, темніший текст);
+           2) transition із затримкою 2s: якщо утримувати виділення 2 секунди,
+              шрифт збільшується на 10%, а фон блоку стає насиченішим.
+           Примітка: у ::selection можна міняти лише колір, фон і тінь тексту,
+           тому «посилення шрифту» реалізовано через :active блоку. */
+        .contacts {
+            display: inline-block;
+            padding: 8px 10px;
+            background-color: #ffffff;
+            transition: font-size 0.5s ease 2s,
+                        background-color 0.5s ease 2s,
+                        color 0.5s ease 2s;
+        }
+
+        .contacts::selection,
+        .contacts ::selection {
+            background-color: hsl(162, 33%, 75%);   /* на 10% темніше за базові 85% */
+            color: #11241f;
+        }
+
+        .contacts:active {
+            font-size: 110%;                        /* шрифт посилено на 10% */
+            background-color: hsl(162, 33%, 92%);
+        }
+
+        /* === АДАПТИВНІСТЬ ===
+           На вузьких екранах сітка стає однією колонкою,
+           а кнопку «Нагору» ховаємо: display: none прибирає елемент зовсім. */
+        @media (max-width: 760px) {
+            body {
+                grid-template-columns: 1fr;
+                grid-template-areas:
+                    "header"
+                    "main"
+                    "sidebar"
+                    "footer";
+            }
+
+            .to-top { display: none; }
+            .collection img { float: none; width: 100%; margin: 0 0 10px; }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header" id="top">
+        <div class="brand">
+            <img class="brand-logo" src="images/logo.svg" alt="Логотип магазину Полотно" width="60" height="60">
+            <h1>Інтернет-магазин одягу "Полотно"</h1>
+        </div>
+        <nav class="main-nav">
+            <form method="get">
+                <button type="submit" formaction="catalog.html">Каталог</button>
+                <button type="submit" formaction="reviews.html">Відгуки про товар</button>
+                <button type="submit" formaction="feedback.html">Зворотний зв'язок</button>
+            </form>
+        </nav>
+    </header>
+    <aside class="sidebar">
+        <h2>Зміст сторінки</h2>
+        <ul>
+            <li><a href="#goal">Мета створення магазину</a></li>
+            <li><a href="#assortment">Загальна інформація про товар</a></li>
+            <li><a href="#contacts">Контакти</a></li>
+        </ul>
+    </aside>
+    <main class="content">
+        <section class="goal" id="goal">
+            <h2>Мета створення магазину</h2>
+            <p class="goal-description">Мета інтернет-магазину "Полотно" — зробити якісний і стильний одяг доступним для кожної родини в Україні: від лляних суконь і вишиванок до теплих пальт і дитячих речей.</p>
+            <p>Для досягнення мети ми виконуємо такі завдання:</p>
+            <ol class="goal-tasks" type="I">
+                <li>Сформувати асортимент одягу з натуральних тканин для жінок, чоловіків і дітей.</li>
+                <li>Співпрацювати з українськими виробниками та підтримувати локальне виробництво.</li>
+                <li>Забезпечити швидку доставку по Україні та безкоштовний обмін розміру.</li>
+            </ol>
+            <p class="styled-sentence">Ми гарантуємо, що <span>кожна</span> <i>річ</i> проходить <b>ретельну</b> перевірку якості, <em>навіть</em> якщо це <u>звичайна футболка</u>.</p>
+        </section>
+        <section class="assortment" id="assortment">
+            <h2>Загальна інформація про товар</h2>
+            <table class="assortment-table">
+                <caption>Асортимент одягу магазину "Полотно"</caption>
+                <thead>
+                    <tr>
+                        <th rowspan="2">Категорія</th>
+                        <th rowspan="2">Тип одягу</th>
+                        <th colspan="2">Ціна, грн</th>
+                        <th rowspan="2">Сезон</th>
+                    </tr>
+                    <tr>
+                        <th>від</th>
+                        <th>до</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td rowspan="2">Жіночий одяг</td>
+                        <td>Сукні</td>
+                        <td>1200</td>
+                        <td>3500</td>
+                        <td>Весна-літо</td>
+                    </tr>
+                    <tr>
+                        <td>Спідниці</td>
+                        <td>800</td>
+                        <td>2200</td>
+                        <td>Всесезонно</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="2">Чоловічий одяг</td>
+                        <td>Вишиванки</td>
+                        <td>900</td>
+                        <td>2900</td>
+                        <td>Всесезонно</td>
+                    </tr>
+                    <tr>
+                        <td>Джинси</td>
+                        <td>1500</td>
+                        <td>3200</td>
+                        <td>Всесезонно</td>
+                    </tr>
+                    <tr>
+                        <td>Дитячий одяг</td>
+                        <td>Футболки</td>
+                        <td>250</td>
+                        <td>600</td>
+                        <td>Весна-літо</td>
+                    </tr>
+                    <tr>
+                        <td>Верхній одяг</td>
+                        <td>Пальта, куртки</td>
+                        <td>3500</td>
+                        <td>9000</td>
+                        <td>Осінь-зима</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="2"><b>Разом:</b> 6 типів одягу</td>
+                        <td colspan="3">Доставка по всій Україні за 1-3 дні</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </section>
+        <article class="collection">
+            <h2>Нова колекція "Осінь-Зима 2026"</h2>
+            <img src="images/new-collection.jpg" alt="Светри на вішаках з нової колекції" width="500">
+            <p>У новій колекції — теплі в'язані светри, вовняні пальта та демісезонні куртки.</p>
+        </article>
+        <section class="account">
+            <h2>Особистий кабінет</h2>
+            <button class="btn btn-account" type="button">Перейти у власний кабінет</button>
+            <button class="btn btn-register" type="button">Зареєструватись</button>
+        </section>
+    </main>
+    <footer class="site-footer" id="contacts">
+        <h2>Адреса та контакти</h2>
+        <address class="contacts">
+            <p>Адреса: м. Київ, вул. Хрещатик, 15</p>
+            <p>Телефони: <a href="tel:+380441234567">+38 (044) 123-45-67</a>, <a href="tel:+380677654321">+38 (067) 765-43-21</a></p>
+        </address>
+        <p>&copy; 2026 Полотно. Усі права захищено.</p>
+    </footer>
+
+    <!-- Кнопка-посилання «Нагору»: приклад position: fixed -->
+    <a class="to-top" href="#top" title="Нагору">&#8593;</a>
+</body>
+</html>

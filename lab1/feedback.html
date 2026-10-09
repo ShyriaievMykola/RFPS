@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Зворотний зв'язок — Полотно</title>
+</head>
+<body>
+    <header>
+        <img src="images/logo.svg" alt="Логотип магазину Полотно" width="60" height="60">
+        <h1>Зворотний зв'язок</h1>
+        <form action="index.html" method="get">
+            <button type="submit">&larr; На головну сторінку</button>
+        </form>
+    </header>
+    <main>
+        <h2>Залиште ваше повідомлення</h2>
+        <form action="#" method="post">
+            <fieldset>
+                <legend>Персональна інформація</legend>
+                <p>
+                    <label for="fullname">Прізвище та ім'я:*</label><br>
+                    <input type="text" id="fullname" name="fullname" placeholder="Шевченко Тарас" required>
+                </p>
+                <p>
+                    <label for="email">E-mail:*</label><br>
+                    <input type="email" id="email" name="email" placeholder="example@mail.com" required>
+                </p>
+                <p>
+                    <label for="age">Вік:</label><br>
+                    <input type="number" id="age" name="age" min="14" max="100" placeholder="20">
+                </p>
+                <p>
+                    <label for="education">Освіта:</label><br>
+                    <select id="education" name="education">
+                        <option value="full">Повна</option>
+                        <option value="incomplete">Неповна</option>
+                        <option value="higher">Вища</option>
+                        <option value="professional">Професійна</option>
+                    </select>
+                </p>
+            </fieldset>
+            <p>
+                <label for="purpose">Мета зворотного зв'язку:*</label><br>
+                <select id="purpose" name="purpose" required>
+                    <option value="" disabled selected>-- Оберіть мету --</option>
+                    <option value="cooperation">Співпраця</option>
+                    <option value="complaint">Скарга на порушення права власності</option>
+                    <option value="proposal">Пропозиція</option>
+                    <option value="bug">Наявність помилки</option>
+                </select>
+            </p>
+            <p>
+                <label for="details">Детально (макс. 300 символів):</label><br>
+                <textarea id="details" name="details" rows="6" cols="50" maxlength="300" placeholder="Опишіть ваше питання..."></textarea>
+            </p>
+            <p>
+                <input type="checkbox" id="consent" name="consent" required>
+                <label for="consent">Я даю згоду на обробку моїх персональних даних</label>
+            </p>
+            <p>
+                <button type="submit">Надіслати</button>
+                <button type="reset">Очистити форму</button>
+            </p>
+        </form>
+    </main>
+    <footer>
+        <p>Email: info@polotno.example</p>
+        <p>&copy; 2026 Полотно. Усі права захищено.</p>
+    </footer>
+</body>
+</html>
