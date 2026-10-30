@@ -20,12 +20,12 @@ function sortByCountry(list) {
 function averagePriceByCountry(list) {
   const byCountry = {};
   for (const p of list) {
-    if (!byCountry[p.country]) byCountry[p.country] = { country: p.country, count: 0, sum: 0 };
+    byCountry[p.country] ||= { country: p.country, count: 0, sum: 0 };
     byCountry[p.country].count++;
     byCountry[p.country].sum += p.price3;
   }
   return Object.values(byCountry)
-    .map(g => ({ country: g.country, count: g.count, averagePrice: +(g.sum / g.count).toFixed(2) }))
+    .map(g => ({ country: g.country, count: g.count, averagePrice: Math.round(g.sum / g.count * 100) / 100 }))
     .sort((a, b) => a.country.localeCompare(b.country, "uk"));
 }
 
@@ -97,9 +97,11 @@ class Customer {
 
   get group() {
     if (!this.inWorkingHours()) return GROUPS.other;
-    if (this.purpose === "претензія") return GROUPS.claim;
-    if (this.purpose === "побажання") return GROUPS.wish;
-    return GROUPS.other;
+    switch (this.purpose){
+      case "претензія": return GROUPS.claim;
+      case "побажання": return GROUPS.wish;
+      default: return GROUPS.other;
+    }
   }
 }
 
