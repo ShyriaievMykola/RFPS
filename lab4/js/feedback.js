@@ -15,3 +15,4 @@ function hideDetailsTip() {
 }
 
 details.onmouseout = hideDetailsTip;
+details.onmouseover = showDetailsTip;
