@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Відгуки покупців інтернет-магазину «Полотно» про сукні, спідниці, вишиванки, джинси, футболки та пальта.">
+    <link rel="icon" href="images/logo.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Відгуки про товар — Полотно</title>
+
+    <style>
+        .content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(16.875rem, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(min(16.875rem, 100%), 1fr));
+            gap: 1.25rem;
+            align-items: start;
+        }
+
+        .content > h2 {
+            grid-column: 1 / -1;
+            margin-bottom: 0;
+        }
+
+        .content > p { grid-column: 1 / -1; }
+
+        .review {
+            padding: 0.875rem 1rem;
+            background-color: #ffffff;
+            border: 1px solid #ddd8cc;
+            border-top: 3px solid hsl(162, 33%, 45%);
+            -webkit-transition: -webkit-transform 0.3s ease, -webkit-box-shadow 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .review:hover {
+            -webkit-transform: translateY(-4px) skewX(-1deg);
+            -ms-transform: translateY(-4px) skewX(-1deg);
+            transform: translateY(-4px) skewX(-1deg);
+            -webkit-box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+            -moz-box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+        }
+
+        .review p::before {
+            content: "\201C";
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 1.6em;
+            color: hsl(162, 33%, 55%);
+            line-height: 0;
+        }
+
+        .review h3::first-letter {
+            font-size: 1.5em;
+            color: hsl(162, 33%, 30%);
+        }
+
+        .review:nth-child(odd) { background-color: #fbfaf7; }
+    </style>
+</head>
+<body>
+    <header class="site-header" id="top">
+        <div class="brand">
+            <img class="brand-logo" src="images/logo.svg" alt="Логотип магазину Полотно" width="60" height="60">
+            <h1>Відгуки про товар</h1>
+        </div>
+        <form class="home-form" action="index.html" method="get">
+            <button type="submit">&larr; На головну сторінку</button>
+        </form>
+    </header>
+    <main class="content">
+        <h2>Що кажуть наші покупці</h2>
+        <article class="review" id="review-dress">
+            <h3>Олена (Київ) — сукня "Весна"</h3>
+            <p>Льон дуже приємний до тіла, у спеку саме те. Розмір підійшов ідеально!</p>
+        </article>
+        <article class="review" id="review-skirt">
+            <h3>Наталія (Вінниця) — спідниця "Грація"</h3>
+            <p>Гарно тримає форму й не мнеться, ношу і в офіс, і на прогулянки.</p>
+        </article>
+        <article class="review" id="review-vyshyvanka">
+            <h3>Оксана (Львів) — вишиванка "Карпати"</h3>
+            <p>Вишивка акуратна, нитки не линяють після прання. Рекомендую.</p>
+        </article>
+        <article class="review" id="review-jeans">
+            <h3>Максим (Дніпро) — джинси "Denim Classic"</h3>
+            <p>Щільний денім, сидять добре, але довелося трохи підшити.</p>
+        </article>
+        <article class="review" id="review-tee">
+            <h3>Світлана (Харків) — футболка "Сонечко"</h3>
+            <p>Донька не хоче знімати! Після багатьох прань футболка як нова.</p>
+        </article>
+        <article class="review" id="review-coat">
+            <h3>Ірина (Одеса) — пальто "Київ"</h3>
+            <p>Тепле, тримає форму, колір точно як на фото. Найкраща покупка зими.</p>
+        </article>
+    </main>
+    <footer class="site-footer">
+        <p>&copy; 2026 Полотно. Усі права захищено.</p>
+    </footer>
+</body>
+</html>
