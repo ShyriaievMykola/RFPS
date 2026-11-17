@@ -1,10 +1,10 @@
 const catalogImages = [
-    "images/dress-vesna-small.jpg",
-    "images/skirt-gratsiia-small.jpg",
-    "images/vyshyvanka-karpaty-small.jpg",
-    "images/jeans-classic-small.jpg",
-    "images/kids-tee-sonechko-small.jpg",
-    "images/coat-kyiv-small.jpg"
+    "images/dress-vesna.jpg",
+    "images/skirt-gratsiia.jpg",
+    "images/vyshyvanka-karpaty.jpg",
+    "images/jeans-classic.jpg",
+    "images/kids-tee-sonechko.jpg",
+    "images/coat-kyiv.jpg"
 ];
 
 const brand = document.querySelector(".brand");
